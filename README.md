@@ -1,90 +1,80 @@
 # Big Mountain Resort Pricing Model
 
-![Resort](https://user-images.githubusercontent.com/67468718/104138103-c3129580-5356-11eb-80db-6b62c122f29b.JPG)
+<img src="images/big-mountain-resort.jpeg" alt="drawing" width="1200"/>
 
-## Problem Statement: 
+## Introduction
+
+In this project, we explored the application of various regression algorithms to predict ticket prices for Big Mountain resort using Springboard’s Data Science Method:
+
+1. Problem identification
+2. Data wrangling
+3. Exploratory data analysis
+4. Pre-processing and training data
+5. Modelling
+6. Documentation
+
+We analyzed and preprocessed the dataset, selected relevant features, and implemented different regression models. The performance of each model is evaluated using metrics such as R-squared and Mean Absolute Error (MAE).
+
+## Problem identification:
     
-What opportunities exist for Big Mountain Resort to effectively develop and implement a new pricing strategy that can maximize capitalization in their facilities investments to offset their recent additional operating cost by $1,540,000 this season.
+Big Mountain resort is a ski resort located in Montana, which has 105 trails and serves 350000 people every year. The resort has installed additional ski lift, which increases operating costs by $1,540,000 this season. The management want some guidance on how to select a better value for their ticket price. They are also considering changes that can either cut costs without undermining the ticket price or support an even higher ticket price. How can Big Mountain resort maximize its returns over the next ski season through better pricing strategy or some changes to current facility investment plans?
 
-## Resort Story:
- 
-Big Mountain Resort offers spectacular views of Glacier National Park and Flathead National Forest, with access to 105 trails. Every year about 350,000 people ski or snowboard at Big Mountain. The business expressed a desire for some guidance on how to select a better value for their ticket price. by considering number of changes hoping to reduce cost without reducing ticket price or increasing ticket price.
+## Data wrangling:
 
-## Current Resort's Pricing Strategy:
+Checked the percentage of missing values and outliers, corrected wrong input, removed irrelevant and useless features, analyzed distribution of resorts and ticket prices by states, created several new features and finally selected adult weekend ticket price as the target variable.
 
-For Big Mountain Resort to base their pricing mainly on just the market average won’t be enough to maximize their capitalization investment and can’t be sustainable to gain an edge over the competition. 
+![ Distribution Of Ticket Price By State](https://github.com/tsar1987/Springboard_Big_Mountain_Project/assets/125304961/a110fd8a-5d15-4e8a-b7e2-620dba371922)
 
-## Modeling scenarios:
+## Exploratory data analysis:
+
+PCA analysis and visualization of high dimensional data found the features with high importance are: 
+1. vertical drop
+2. snow making area
+3. number of total chairs
+4. number of fast quads
+5. number of runs
+6. longest run length
+7. number of trams
+8. skiable area
+
+![Feature correlation heatmap](https://github.com/tsar1987/Springboard_Big_Mountain_Project/assets/125304961/ab97b6f5-692b-4419-b8bf-80cdedcf9600)
+
+## Pre-processing and training data
+
+Split train set and test set before training.
+1. **Linear Regression**:<br>
+Implementation: created pipeline consist of imputer, standard scaler and linear regression.<br>
+Assessment: cross validation with MAE and R-squared as metrics.<br>
+Hyperparameter tuning: GridSearchCV and cross validation of best estimator.<br>
+2. **Random Forest Regressor**:<br>
+Implementation: created pipeline consist of imputer, standard scaler and random forest regressor.<br>
+Assessment: cross validation with MAE and R-squared as metrics.<br>
+Hyperparameter tuning: GridSearchCV and cross validation of best estimator.<br>
+
+<img src="images/R2 and MAE.jpg" width="1000"/>
+
+![Best random forest regressor feature importances](https://github.com/tsar1987/Springboard_Big_Mountain_Project/assets/125304961/0db81472-982e-4562-b599-53e3512e65ed)
+
+## Modeling:
 
 Big Mountain Resort has been reviewing potential scenarios for either cutting costs or increasing revenue (from ticket prices). Ticket price is not determined by any set of parameters; the resort is free to set whatever price it likes. However, the resort operates within a market where people pay more for certain facilities, and less for others. Being able to sense how facilities support a given ticket price is valuable business intelligence. This is where the utility of our model comes in.
 
 The business has shortlisted some options:
-
- * Permanently closing down up to 10 of the least used runs. This doesn't impact any other resort statistics.
- * Increase the vertical drop by adding a run to a point 150 feet lower down but requiring the installation of an additional chair lift to bring skiers back up, without additional snow making coverage
- * Same as number 2, but adding 2 acres of snow making cover
- * Increase the longest run by 0.2 mile to boast 3.5 miles length, requiring an additional snow making coverage of 4 acres
+1. Permanently closing down up to 10 of the least used runs. This doesn't impact any other resort statistics.
+2. Increase the vertical drop by adding a run to a point 150 feet lower down but requiring the installation of an additional chair lift to bring skiers back up, without additional snow making coverage
+3. Same as number 2, but adding 2 acres of snow making cover
+4. Increase the longest run by 0.2 mile to boast 3.5 miles length, requiring an additional snow making coverage of 4 acres
 
 The expected number of visitors over the season is 350,000 and, on average, visitors ski for five days. Assume the provided data includes the additional lift that Big Mountain recently installed.
 
-## Feature Engineering:
+## Documentation:  
+1. **Pricing Recommendation**: <br>
+Based on the market position and facilities of Big Mountain resort, the model suggest the ticket price of Big Mountain should be $95.87±10.39, first increase the ticket price from $81 to $85.48 and monitor the daily increase of revenue and validate with sale information. If it continues, increase the price to maximum of $106.26.<br>
+2. **Improvement Suggestion**:<br>
+   2.1 close one least used run, which will not influence the revenue.<br>
+   2.2 close five least used run and monitor the reduce of operation cost and revenue changes.<br>
+   2.3 increase the vertical drop by adding a run to a point 150 feet lower down with installation of an additional chair lift without additional snow making coverage, which will increase revenue roughly $3 million.
 
- * **Feature Correlation heatmap**: a great way to gain a high level view and idnetify patterns of relationships amongst the features:
-     * summit and base elevation are quite highly correlated. This isn't a surprise. 
-     * AdultWeekend ticket price, we see quite a few reasonable correlations. fastQuads stands out, along with Runs and Snow Making_ac. 
-     * The last one is interesting. Visitors would seem to value more guaranteed snow, which would cost in terms of snow making equipment, which would drive prices and costs up.
-     * As well as Runs, total_chairs is quite well correlated with ticket price. This is plausible; the more runs you have, the more chairs you'd need to ferry people to them! Interestingly, they may count for more than the total skiable terrain area. For sure, the total skiable terrain area is not as useful as the area with snow making. People seem to put more value in guaranteed snow cover rather than more variable terrain area.
- 
- ![correclations_heat](https://user-images.githubusercontent.com/67468718/103321593-46df9000-49ef-11eb-95e4-ed68a07ca5b8.JPG)
- 
-  * **Feature Correlation Scatterplots**: Correlations, particularly viewing them together as a heatmap, can be a great first pass at identifying patterns. But correlation can mask relationships between two variables
-     * There's a strong positive correlation with vertical_drop.
-     * fastQuads seems very useful. Runs and total_chairs appear quite similar and also useful.
-    
-![resort_Scatter](https://user-images.githubusercontent.com/67468718/103321868-8d81ba00-49f0-11eb-9fb6-26dc1a4c91b1.JPG)
-
-## Pre-Processing and Training Data: 
-  * **Linear Model**: In the process of building the linear model, missing values were imputed with the median and mean values. If ticket prices were predicted using the linear model, they would be off by about $9. However, the initial linear model was overfitting and needed to be adjusted by the number of features. Through cross-validation, the value of k was set to eight features to focus on: vertical_drop, Snow Making_ac, total_chairs, fastQuads, Runs, LongestRun_mi, trams, and SkiableTerrain_ac. These features fit our initial assumptions from EDA.
-  
-  * **Random Forest Model**: Was developed. Like the linear model, missing values were imputed with the median and mean values. While imputing the median was helpful, it was not helpful to scale the features. The random forest model revealed that the top four features to consider are fastQuads, Runs, Snow Making_ac, and vertical_drop.
-    
-  * **Final Model Selection**: After testing both the linear model and random forest model, the project will be moving forward with the forest regression model. Comparison of the two demonstrated that performance on the test set was consistent cross-validation results. Additionally, the cross-validation mean absolute error was lower using the random forest regressor.
-  
-## Recommendations: 
-  * Our Model suggests that Mountain Resort’s ticket price is lower than the predicted model by 16.31%, and the resort have many potential scenarios for either cutting costs by closing runs or increasing ticket price by increasing vertical drop, adding acres snow making or increasing the longest run.
-  * Increasing the vertical drop by 150 ft would increase the ticket price by 10.44% from $81 to $89.46, resulting in revenue increase by $14,811,594.
-  * Adding 2 acres of snow making would increase the ticket price by 12% from $81 to $90.75, resulting in revenue increase by $17,068,841.
-  * When it comes to closing up to 10 used Runs, our Model predicted the following: 
-    * Closing one run will have no impact on Ticket price or revenue.
-    * Closing 2 runs reduce support for ticket price and so revenue by $0.4 and $750,000 respectively. 
-    * Closing down 3 runs, it seems they may as well close down 4 or 5 as there’s same loss in ticket price and revenue by $0.67 and $1.250M respectively.
-    * Closing 10 runs reduce support for ticket price and so revenue by $1.71 and $3M respectively.
-    * Because we don’t know the operating cost per used run, we can’t determine how much cost saving will be offset the loss in revenue after closing more than one run.
-       
-<p align="center">
-  <img width="550" height="500" src="https://user-images.githubusercontent.com/67468718/103326653-3d155700-4a06-11eb-8e4f-c90e7c3a866d.JPG">
-</p>
-
-    
-## Conclusion: 
-After applying our Model for ski resort ticket price and leverage it to explore Big Mountain Resort’s potential scenarios for increasing revenue, we can conclude that:
-  * The best scenario where we managed to gain the highest revenue increase possible was by increasing the vertical drop by 150 ft, adding one Chair Lift, adding one run and adding 2 acres of snow making cover. This scenario has increased ticket price by 12% from $81 to $90.75, resulting in a bottom-line increase by $15,528,841 (After deducting operating costs = $1.54M).
-  * Due to lack of data in regards of operating cost per used run and weekdays ticket price, our model cannot recommend closing down used runs or implementing a dynamic ticket pricing.
-   
-<p align="center">
-  <img width="760" height="600" src="https://user-images.githubusercontent.com/67468718/103326714-849be300-4a06-11eb-9cad-8a898f6f9319.JPG">
-</p>
-
-
-    
-    
-
-    
-    
-    
-
-
-
-
-
-
+## Future Work: 
+The deficiency in the data is that the operation cost is unknown. Cost information will be helpful to improve the performance of the models.<br>
+To make machine learning models available for business analysts to use, it is necessary to deploy the trained models in a production environment where they can be accessed by business analysts, such as cloud-based services.
